@@ -33,7 +33,7 @@ Windows Registry Editor Version 5.00
 @="\"$escapedPath\" \"%1\""
 "@
 
-    $regContent | Out-File -FilePath "add_neovide_with_icon.reg" -Encoding UTF8
+    $regContent | Out-File -FilePath "add_neovide.reg" -Encoding UTF8
     Write-Host "Generated add_neovide_with_icon.reg with path: $neovidePath"
 } else {
     Write-Host "Could not find neovide.exe on this system."
