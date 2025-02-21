@@ -22,6 +22,9 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+-- Подключение конфигурации плагинов
+require("lazy").setup("plugins.plugins") 
+
 -- ╭───────────────────────────────────────────────╮
 -- │ Основные настройки              
 -- ╰───────────────────────────────────────────────╯
@@ -237,14 +240,19 @@ vim.g.airline_powerline_fonts = 1
 vim.g.airline_extensions = { 'tabline' }
 
 -- Увеличение шрифта в Neovide в реальном времени
-vim.g.neovide_scale_factor = 0.7  
-local change_scale_factor = function(delta)
-    local new_value = vim.g.neovide_scale_factor + delta
-    vim.g.neovide_scale_factor = math.floor(new_value * 10) / 10 -- Округление до 1 знака после запятой
-end
+vim.g.neovide_scale_factor = 0.7
 
-vim.keymap.set("n", "<C-=>", function() change_scale_factor(0.1) end)
-vim.keymap.set("n", "<C-->", function() change_scale_factor(-0.1) end)
+local function change_scale_factor(delta)
+    local current_value = vim.g.neovide_scale_factor or 1.0 -- начальное значение, если не определено
+    local new_value = current_value + delta
+    new_value = math.max(0.1, math.min(2.0, new_value)) -- ограничение диапазона
+    vim.g.neovide_scale_factor = new_value
+    vim.o.guifont = vim.o.guifont -- триггер обновления шрифта
+    print("New scale factor: " .. vim.g.neovide_scale_factor)
+end
+-- Новые привязки для теста, чтобы избежать конфликтов
+vim.keymap.set("n", "<C-->", function() change_scale_factor(0.1) end)
+vim.keymap.set("n", "<C-=>", function() change_scale_factor(-0.1) end)
 
 -- Улучшенная подсветка синтаксиса
 require'nvim-treesitter.configs'.setup {
@@ -264,16 +272,10 @@ vim.api.nvim_set_keymap('v', '<C-.>', 'gc', { noremap = false, silent = true })
 -- Переключение состояния spell с Leader + s и использование обоих языков
 vim.api.nvim_set_keymap('n', '<Leader>s', ':set spell! spelllang=en_us,ru_ru<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<Leader>ы', ':set spell! spelllang=en_us,ru_ru<CR>', { noremap = true, silent = true })
-vim.keymap.set("n", "<C-=>", function() change_scale_factor(1.1) end)
 
 -- Перемещение по визуальным строкам
 vim.keymap.set("n", "<leader>j", "gj", {noremap = true, silent = ture})
 vim.keymap.set("n", "<leader>k", "gk", {noremap = true, silent = ture})
 vim.keymap.set("n", "<leader>о", "gj", {noremap = true, silent = ture})
 vim.keymap.set("n", "<leader>л", "gk", {noremap = true, silent = ture})
-
--- Подключение конфигурации плагинов
-require("lazy").setup("plugins.plugins") 
-
-
 

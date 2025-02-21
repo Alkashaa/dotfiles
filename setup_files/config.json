@@ -1,0 +1,12 @@
+{
+    "configs": {
+        "nvim": {
+            "windows": "C:/Users/%USERNAME%/AppData/Local/nvim",
+            "linux": "~/.config/nvim"
+        },
+        "cmd": {
+            "windows": "C:/Users/%USERNAME%/AppData/Local/cmd",
+            "linux": "~/.cmd"
+        }
+    }
+}

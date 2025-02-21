@@ -1,5 +1,5 @@
 --- Путь к настройкам
-main_dir = "C:/Users/eclipse/AppData/Local/nvim/"
+main_dir = "C:/Users/Alkasha/AppData/Local/nvim/"
 -- Определяем операционку
 uname = vim.loop.os_uname().sysname
 
